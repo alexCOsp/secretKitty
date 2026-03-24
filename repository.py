@@ -1,10 +1,15 @@
 import uuid
-import json
 from datetime import datetime
 
 
 # ── CREATE ──────────────────────────────
-def add_entry(data: dict, title, username, password):
+def add_entry(
+    data: dict,
+    title: str,
+    username: str,
+    password: str,
+) -> dict:
+    """Add a new entry to the in-memory vault data and return it."""
     entry = {
         "id": str(uuid.uuid4()),
         "title": title,
@@ -14,11 +19,7 @@ def add_entry(data: dict, title, username, password):
         "updated_at": datetime.now().isoformat(),
     }
     data["entries"].append(entry)
-
-    with open("vault.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-
-    print("Save to vault.json")
+    return data
 
 
 # ── READ（All）────────────────────────

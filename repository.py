@@ -1,4 +1,5 @@
 import uuid
+import json
 from datetime import datetime
 
 
@@ -13,7 +14,11 @@ def add_entry(data: dict, title, username, password):
         "updated_at": datetime.now().isoformat(),
     }
     data["entries"].append(entry)
-    return data
+
+    with open("vault.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+    print("Save to vault.json")
 
 
 # ── READ（All）────────────────────────

@@ -1,6 +1,6 @@
-from repository import add_entry
-from repository import get_all_entries
-from repository import get_entry_by_id
+from src.data.repository import add_entry
+from src.data.repository import get_all_entries
+from src.data.repository import get_entry_by_id
 
 
 def main():

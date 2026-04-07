@@ -9,26 +9,6 @@
       "url": "https://example.com",
       "created_at": "2024-06-01T12:00:00",
       "updated_at": "2024-06-01T12:00:00"
-    },
-    {
-      "id": "7e7270a1-efb5-4595-a312-51e09631335e",
-      "title": "Gmail",
-      "username": "user@gmail.com",
-      "password": "p@ssw0rd",
-      "notes": "Personal email account",
-      "url": "https://mail.google.com",
-      "created_at": "2026-04-07T10:42:35.318641",
-      "updated_at": "2026-04-07T10:42:35.318670"
-    },
-    {
-      "id": "1efc2f8e-1c5b-4413-b499-729d82f5c711",
-      "title": "GitHub",
-      "username": "devuser",
-      "password": "gh_token_123",
-      "notes": "Work projects",
-      "url": "https://github.com",
-      "created_at": "2026-04-07T10:42:35.349316",
-      "updated_at": "2026-04-07T10:42:35.349325"
     }
   ]
 }

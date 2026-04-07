@@ -1,24 +1,8 @@
-# Python
+vault.json
+
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-*.egg-info/
-dist/
-build/
 
-# Virtual environments
 .venv/
 venv/
-env/
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-Thumbs.db
-.DS_Store
-
-# Secrets
-vault.json

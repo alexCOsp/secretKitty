@@ -1,5 +1,24 @@
 {
   "entries": [
-
+    {
+      "id": "c3809df3-ef98-4c7b-a53f-6b4ee0e51435",
+      "title": "Gmail",
+      "username": "user@gmail.com",
+      "password": "p@ssw0rd",
+      "notes": "Personal email account",
+      "url": "https://mail.google.com",
+      "created_at": "2026-04-07T10:21:36.594907",
+      "updated_at": "2026-04-07T10:21:36.594937"
+    },
+    {
+      "id": "e9b82792-8439-4fa8-9588-6edc2ca25a0b",
+      "title": "GitHub",
+      "username": "devuser",
+      "password": "gh_token_123",
+      "notes": "Work projects",
+      "url": "https://github.com",
+      "created_at": "2026-04-07T10:21:36.596506",
+      "updated_at": "2026-04-07T10:21:36.596518"
+    }
   ]
 }

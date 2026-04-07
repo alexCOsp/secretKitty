@@ -4,12 +4,14 @@ from datetime import datetime
 
 
 # ── CREATE ──────────────────────────────
-def add_entry(data: dict, title, username, password):
+def add_entry(data: dict, title, username, password, notes: str, url: str):
     entry = {
         "id": str(uuid.uuid4()),
         "title": title,
         "username": username,
         "password": password,  # encrypted by crypto.py
+        "notes": notes,
+        "url": url,
         "created_at": datetime.now().isoformat(),
         "updated_at": datetime.now().isoformat(),
     }
@@ -23,7 +25,20 @@ def add_entry(data: dict, title, username, password):
 
 # ── READ（All）────────────────────────
 def get_all_entries(data: dict) -> list:
+    print(sorted(data["entries"], key=lambda e: e["title"]))
     return sorted(data["entries"], key=lambda e: e["title"])
+
+
+# ── READ（SINGLE）────────────────────────
+def get_entry_by_id(data: dict, id: str) -> dict | None:
+    for entry in data["entries"]:
+        if entry["id"] == id:
+            print(entry)
+            return entry
+        else:
+            print(f"Entry with id {id} not found.")
+            return None
+    return None
 
 
 # ── UPDATE ──────────────────────────────

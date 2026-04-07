@@ -1,15 +1,17 @@
-from src.data.repository import add_entry
+"""secretKitty — encrypted password manager entry point.
+
+The GUI/middleware layer should import from:
+    - src.core.crypto   (key derivation, encrypt, decrypt)
+    - src.data.vault    (file I/O for vault.enc)
+    - src.data.repository (in-memory CRUD for entries)
+
+See docs/crypto-api-guide.md for usage examples.
+"""
 
 
-def main():
-
-    print("Hello from Secret kitty!")
-
-    data = {"entries": []}
-
-    add_entry(data, title="Gmail", username="user@gmail.com", password="p@ssw0rd")
-
-    add_entry(data, title="GitHub", username="devuser", password="gh_token_123")
+def main() -> None:
+    print("🐱 secretKitty Password Manager")
+    print("   Crypto core ready. Waiting for GUI integration.")
 
 
 if __name__ == "__main__":

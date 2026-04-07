@@ -3,7 +3,20 @@ import json
 from datetime import datetime
 
 
-# ── CREATE ──────────────────────────────
+# ── READ JSON FILE ──────────────────────────────
+def read_json_file() -> dict:
+    with open("vault.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data
+
+
+# ── WRITE JSON FILE ──────────────────────────────
+def write_json_file(data: dict) -> None:
+    with open("vault.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+
+# ── UPDATE ──────────────────────────────
 def add_entry(title: str, username: str, password: str, notes: str, url: str) -> None:
 
     newEntry = {
@@ -18,15 +31,13 @@ def add_entry(title: str, username: str, password: str, notes: str, url: str) ->
     }
 
     # Read existing data
-    with open("vault.json", "r", encoding="utf-8") as f:
-        currentData: dict[str, list] = json.load(f)
+    currentData = read_json_file()
 
     # Add new entry
     currentData["entries"].append(newEntry)
 
     # Write updated data back to file
-    with open("vault.json", "w", encoding="utf-8") as f:
-        json.dump(currentData, f, indent=2, ensure_ascii=False)
+    write_json_file(currentData)
 
     print("Save to vault.json")
 
@@ -34,8 +45,7 @@ def add_entry(title: str, username: str, password: str, notes: str, url: str) ->
 # ── READ（All）────────────────────────
 def get_all_entries() -> list:
 
-    with open("vault.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
+    data = read_json_file()
 
     print(sorted(data["entries"], key=lambda e: e["title"]))
     return sorted(data["entries"], key=lambda e: e["title"])
@@ -43,8 +53,7 @@ def get_all_entries() -> list:
 
 # ── READ（SINGLE）────────────────────────
 def get_entry_by_id(id: str) -> dict | None:
-    with open("vault.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
+    data = read_json_file()
 
     for entry in data["entries"]:
         if entry["id"] == id:
@@ -55,15 +64,39 @@ def get_entry_by_id(id: str) -> dict | None:
 
 
 # ── UPDATE ──────────────────────────────
-def update_entry(data: dict, id: str, **kwargs) -> dict:
+def update_entry(
+    id: str, title: str, username: str, password: str, notes: str, url: str
+) -> dict:
+    data = read_json_file()
     for entry in data["entries"]:
         if entry["id"] == id:
-            entry.update(kwargs)
-            entry["updated_at"] = datetime.now().isoformat()
+            entry.update(
+                {
+                    "title": title,
+                    "username": username,
+                    "password": password,
+                    "notes": notes,
+                    "url": url,
+                    "updated_at": datetime.now().isoformat(),
+                }
+            )
+            print(f"Entry with id {id} updated.")
+            write_json_file(data)
             break
+        else:
+            print(f"Entry with id {id} not found.")
     return data
 
 
-def delete_entry(data: dict, id: str) -> dict:
-    data["entries"] = [e for e in data["entries"] if e["id"] != id]
+# ── DELETE ──────────────────────────────
+def delete_entry(id: str) -> dict:
+    data = read_json_file()
+    for entry in data["entries"]:
+        if entry["id"] == id:
+            data["entries"].remove(entry)
+            print(f"Entry with id {id} deleted.")
+            break
+        else:
+            print(f"Entry with id {id} not found.")
+    write_json_file(data)
     return data

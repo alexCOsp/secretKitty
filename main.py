@@ -1,4 +1,4 @@
-from repository import add_entry
+from src.data.repository import add_entry
 
 
 def main():

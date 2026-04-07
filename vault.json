@@ -1,0 +1,64 @@
+{
+  "entries": [
+    {
+      "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+      "title": "Gmail Updated",
+      "username": "user@gmail.com",
+      "password": "new_password",
+      "notes": "Updated personal email account",
+      "url": "https://mail.google.com",
+      "created_at": "2024-06-01T12:00:00",
+      "updated_at": "2026-04-07T11:03:28.371654"
+    },
+    {
+      "id": "3e5514c5-9687-4b05-8289-e7c2090d3ae2",
+      "title": "Gmail",
+      "username": "user@gmail.com",
+      "password": "p@ssw0rd",
+      "notes": "Personal email account",
+      "url": "https://mail.google.com",
+      "created_at": "2026-04-07T11:03:09.423488",
+      "updated_at": "2026-04-07T11:03:09.423519"
+    },
+    {
+      "id": "2d4e296b-ff98-4643-825a-680b2567982a",
+      "title": "Gmail",
+      "username": "user@gmail.com",
+      "password": "p@ssw0rd",
+      "notes": "Personal email account",
+      "url": "https://mail.google.com",
+      "created_at": "2026-04-07T11:03:28.285607",
+      "updated_at": "2026-04-07T11:03:28.285636"
+    },
+    {
+      "id": "80a473ca-bbda-466e-a313-7e85b7a3cf8f",
+      "title": "ytyt",
+      "username": "tyt",
+      "password": "rt",
+      "notes": "",
+      "url": "",
+      "created_at": "2026-04-07T11:03:28.287987",
+      "updated_at": "2026-04-07T11:37:44.086894"
+    },
+    {
+      "id": "c2d1c5b2-c848-498e-b040-e7fd797a9e9c",
+      "title": "sd",
+      "username": "sd",
+      "password": "sd",
+      "notes": "",
+      "url": "",
+      "created_at": "2026-04-07T11:36:47.201530",
+      "updated_at": "2026-04-07T11:36:47.201560"
+    },
+    {
+      "id": "fea43f16-ca4f-4830-8724-88427429a550",
+      "title": "yy",
+      "username": "yy",
+      "password": "yy",
+      "notes": "",
+      "url": "",
+      "created_at": "2026-04-07T11:44:45.902840",
+      "updated_at": "2026-04-07T11:44:45.902850"
+    }
+  ]
+}

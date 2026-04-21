@@ -10,8 +10,8 @@ See docs/crypto-api-guide.md for usage examples.
 
 
 def main() -> None:
-    print("🐱 secretKitty Password Manager")
-    print("   Crypto core ready. Waiting for GUI integration.")
+    print("secretKitty Password Manager")
+    print("Crypto core ready. Waiting for GUI integration.")
 
 
 if __name__ == "__main__":

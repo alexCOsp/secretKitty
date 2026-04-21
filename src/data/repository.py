@@ -1,12 +1,32 @@
 import uuid
 import json
 from datetime import datetime
+from src.core.crypto import derive_key, decrypt, encrypt, generate_salt
+from src.data.vault import load_vault, vault_exists, save_vault
+from getpass import getpass
+
+
+def is_first_run() -> bool:
+    return not vault_exists()
 
 
 # ── READ JSON FILE ──────────────────────────────
 def read_json_file() -> dict:
-    with open("vault.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
+    if is_first_run():
+        data: dict = {"entries": []}
+        json_str = json.dumps(data, ensure_ascii=False)
+        password = getpass()
+        salt = generate_salt()
+        key = derive_key(password, salt)
+        token = encrypt(key, json_str)
+        save_vault(salt, token)
+        return data
+    else:
+        password = getpass()
+        salt, token = load_vault()
+        key = derive_key(password, salt)
+        json_str = decrypt(key, token)
+        data = json.loads(json_str)
     return data
 
 

@@ -26,8 +26,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from repository import add_entry
-
+from src.data.repository import add_entry
 
 BASE_DIR = Path(__file__).resolve().parent
 VAULT_PATH = BASE_DIR / "vault.json"
@@ -326,7 +325,9 @@ class PasswordManagerWindow(QWidget):
             return
 
         data = self.state.to_dict()
-        updated_data = add_entry(data, title=title, username=username, password=password)
+        updated_data = add_entry(
+            data, title=title, username=username, password=password
+        )
         self.state = VaultState(entries=updated_data["entries"])
         save_vault(self.vault_path, self.state)
         self._refresh_sidebar()

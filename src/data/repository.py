@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from src.core.crypto import derive_key, decrypt, encrypt, generate_salt
 from src.data.vault import load_vault, vault_exists, save_vault
+from cryptography.fernet import InvalidToken
 from getpass import getpass
 
 
@@ -25,15 +26,26 @@ def read_json_file() -> dict:
         password = getpass()
         salt, token = load_vault()
         key = derive_key(password, salt)
-        json_str = decrypt(key, token)
-        data = json.loads(json_str)
+
+        try:
+            json_str = decrypt(key, token)
+            data = json.loads(json_str)
+        except InvalidToken:
+            # 密碼錯誤或檔案損壞
+            # 顯示錯誤訊息，不要透露是哪一種
+            print("驗證失敗")
+            raise
     return data
 
 
 # ── WRITE JSON FILE ──────────────────────────────
 def write_json_file(data: dict) -> None:
-    with open("vault.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    password = getpass()
+    salt, token = load_vault()
+    key = derive_key(password, salt)
+    json_str = json.dumps(data, ensure_ascii=False)
+    token = encrypt(key, json_str)
+    save_vault(salt, token)
 
 
 # ── UPDATE ──────────────────────────────
@@ -50,14 +62,22 @@ def add_entry(title: str, username: str, password: str, notes: str, url: str) ->
         "updated_at": datetime.now().isoformat(),
     }
 
-    # Read existing data
-    currentData = read_json_file()
+    master_password = getpass()
+    salt, token = load_vault()
+    key = derive_key(master_password, salt)
 
-    # Add new entry
-    currentData["entries"].append(newEntry)
+    try:
+        json_str = decrypt(key, token)
+        data = json.loads(json_str)
+    except InvalidToken:
+        print("驗證失敗")
+        raise
 
-    # Write updated data back to file
-    write_json_file(currentData)
+    data["entries"].append(newEntry)
+
+    json_str = json.dumps(data, ensure_ascii=False)
+    token = encrypt(key, json_str)
+    save_vault(salt, token)
 
     print("Save to vault.json")
 
@@ -65,7 +85,16 @@ def add_entry(title: str, username: str, password: str, notes: str, url: str) ->
 # ── READ（All）────────────────────────
 def get_all_entries() -> list:
 
-    data = read_json_file()
+    master_password = getpass()
+    salt, token = load_vault()
+    key = derive_key(master_password, salt)
+
+    try:
+        json_str = decrypt(key, token)
+        data = json.loads(json_str)
+    except InvalidToken:
+        print("驗證失敗")
+        raise
 
     print(sorted(data["entries"], key=lambda e: e["title"]))
     return sorted(data["entries"], key=lambda e: e["title"])
@@ -73,7 +102,16 @@ def get_all_entries() -> list:
 
 # ── READ（SINGLE）────────────────────────
 def get_entry_by_id(id: str) -> dict | None:
-    data = read_json_file()
+    master_password = getpass()
+    salt, token = load_vault()
+    key = derive_key(master_password, salt)
+
+    try:
+        json_str = decrypt(key, token)
+        data = json.loads(json_str)
+    except InvalidToken:
+        print("驗證失敗")
+        raise
 
     for entry in data["entries"]:
         if entry["id"] == id:
@@ -87,7 +125,17 @@ def get_entry_by_id(id: str) -> dict | None:
 def update_entry(
     id: str, title: str, username: str, password: str, notes: str, url: str
 ) -> dict:
-    data = read_json_file()
+    master_password = getpass()
+    salt, token = load_vault()
+    key = derive_key(master_password, salt)
+
+    try:
+        json_str = decrypt(key, token)
+        data = json.loads(json_str)
+    except InvalidToken:
+        print("驗證失敗")
+        raise
+
     for entry in data["entries"]:
         if entry["id"] == id:
             entry.update(
@@ -101,16 +149,29 @@ def update_entry(
                 }
             )
             print(f"Entry with id {id} updated.")
-            write_json_file(data)
             break
         else:
             print(f"Entry with id {id} not found.")
+
+    json_str = json.dumps(data, ensure_ascii=False)
+    token = encrypt(key, json_str)
+    save_vault(salt, token)
     return data
 
 
 # ── DELETE ──────────────────────────────
 def delete_entry(id: str) -> dict:
-    data = read_json_file()
+    master_password = getpass()
+    salt, token = load_vault()
+    key = derive_key(master_password, salt)
+
+    try:
+        json_str = decrypt(key, token)
+        data = json.loads(json_str)
+    except InvalidToken:
+        print("驗證失敗")
+        raise
+
     for entry in data["entries"]:
         if entry["id"] == id:
             data["entries"].remove(entry)
@@ -118,5 +179,8 @@ def delete_entry(id: str) -> dict:
             break
         else:
             print(f"Entry with id {id} not found.")
-    write_json_file(data)
+
+    json_str = json.dumps(data, ensure_ascii=False)
+    token = encrypt(key, json_str)
+    save_vault(salt, token)
     return data
